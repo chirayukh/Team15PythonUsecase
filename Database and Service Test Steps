@@ -1,0 +1,17 @@
+1. Create a new database:
+CREATE DATABASE bank_management;
+2. Create a user and grant privileges (optional but recommended):
+CREATE USER bms_user WITH ENCRYPTED PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE bank_management TO bms_user;
+
+Test the User Service
+1. Run the User Service:
+uvicorn user_service.main:app --reload
+
+2. Test with Postman or use Swagger UI at http://127.0.0.1:8000/docs.
+•	Register User Endpoint:
+o	POST /register/
+o	Body: { "username": "johndoe", "email": "john@example.com", "password": "password123", "full_name": "John Doe" }
+•	Login User Endpoint:
+o	POST /login/
+o	Body: { "username": "johndoe", "password": "password123" }
