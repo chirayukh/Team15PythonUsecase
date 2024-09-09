@@ -1,0 +1,16 @@
+For this Error:
+.\venv\Scripts\activate : File D:\My 
+Work-Usecase\bank_management_system\user_service\venv\Scripts\Activate.ps1 cannot be loaded because running     
+scripts is disabled on this system. For more information, see about_Execution_Policies at 
+https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ .\venv\Scripts\activate
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+Solution is this : 
+1. Open Windows Powershell
+2. Execute this command: Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+3. Press Y
+4. if you want you can change it back to restricted mode by executing this command : Set-ExecutionPolicy Restricted -scope CurrentUser
