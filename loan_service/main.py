@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
-from . import models, schemas, crud
-from .database import engine, SessionLocal
+import models, schemas, crud
+from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 
 app = FastAPI()

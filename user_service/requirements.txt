@@ -1,0 +1,9 @@
+fastapi==0.95.1
+uvicorn==0.21.1
+SQLAlchemy==1.4.36
+psycopg2-binary==2.9.6
+pydantic==1.10.2
+alembic==1.8.1
+python-multipart==0.0.5  # for handling file uploads (if needed)
+passlib[bcrypt]==1.7.4   # for password hashing
+pyjwt==2.4.0             # for JWT-based authentication (if needed)

@@ -1,17 +1,21 @@
 from pydantic import BaseModel
-from datetime import datetime
+from typing import Optional
 
 class AccountBase(BaseModel):
     account_type: str
-    balance: float
-    customer_id: int
+    balance: Optional[float] = 0.0
+    owner_id: int  # Reference to the user who owns the account
 
-class AccountUpdate(AccountBase):
+class AccountCreate(AccountBase):
     pass
+
+class AccountUpdate(BaseModel):
+    account_type: Optional[str] = None
+    balance: Optional[float] = None
 
 class Account(AccountBase):
     id: int
-    updated_at: datetime
+    account_number: str
 
     class Config:
         orm_mode = True

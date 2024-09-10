@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
+import models, schemas
 
 def create_loan(db: Session, loan: schemas.LoanCreate):
     db_loan = models.Loan(**loan.dict())
