@@ -1,0 +1,33 @@
+User_service
+
+1. POST- /register/
+Request Payload:
+
+{
+    "username": "Ram",
+    "email" : "ram@gmail.com",
+    "password" : "ram345!6789",
+    "first_name" : "Ram",
+    "last_name": "Rahul",
+    "address": "chennai",
+    "state":"TamilNadu",
+    "country":"India",
+    "dob" : "1998-05-15",
+    "contact_no": 9876543210
+}
+
+
+loan_service:
+
+1. POST - /apply-loan/
+
+Request Payload:
+{
+    "loan_type" : "Home",
+    "amount" : 2000000,
+    "interest_rate" : 5,
+    "duration_months" : 24,
+    "customer_id" : 1
+}
+
+

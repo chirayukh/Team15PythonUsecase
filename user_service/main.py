@@ -16,7 +16,7 @@ def get_db():
     finally:
         db.close()
 
-@app.post("/register/", response_model=schemas.User)
+@app.post("/register/")
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
@@ -29,3 +29,11 @@ def login_user(user: schemas.UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=response["message"])
     
     return response  
+
+@app.get("/users/{user_id}")
+def get_user(user_id: int, db: Session = Depends(get_db)):
+    return crud.get_user(db=db, user_id=user_id)
+
+@app.get("/users/")
+def get_users(db: Session = Depends(get_db)):
+    return crud.get_users(db=db)

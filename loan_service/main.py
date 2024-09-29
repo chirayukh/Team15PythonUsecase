@@ -20,6 +20,15 @@ def get_db():
 def apply_loan(loan: schemas.LoanCreate, db: Session = Depends(get_db)):
     return crud.create_loan(db=db, loan=loan)
 
-@app.get("/loans/{loan_id}")
-def get_loan(loan_id: int, db: Session = Depends(get_db)):
-    return crud.get_loan(db=db, loan_id=loan_id)
+@app.get("/loans/{customer_id}")
+def get_loan(customer_id: int, db: Session = Depends(get_db)):
+    return crud.get_loan_by_customer_Id(db=db, customer_id=customer_id)
+
+
+@app.put("/loans/{customer_id}/{loan_type}",)
+def update_loan(customer_id: int,loan_type: str ,loan_data: schemas.LoanUpdate,db: Session = Depends(get_db)):
+    return crud.update_loan(db=db, customer_id=customer_id,loan_type=loan_type, loan_data=loan_data)
+
+
+
+
