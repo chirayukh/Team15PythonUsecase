@@ -5,6 +5,7 @@ class Loan(Base):
     __tablename__ = "loans"
 
     id = Column(Integer, primary_key=True, index=True)
+    loan_no = Column(String, index=True)
     loan_type = Column(String, index=True)
     amount = Column(Float)
     interest_rate = Column(Float)
