@@ -1,5 +1,6 @@
-from pydantic import BaseModel,validator
+from pydantic import BaseModel,validator, EmailStr
 from datetime import date
+from typing import Optional
 
 class UserBase(BaseModel):
     username: str
@@ -33,6 +34,19 @@ class UserResponse(BaseModel):
     dob: date
     contact_no: int
     disabled: bool    
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    full_name: Optional[str] = None
+    address: Optional[str] = None
+    state: Optional[str] = None
+    country: Optional[str] = None
+    dob: Optional[date] = None
+    contact_no: Optional[int] = None
+    disabled: Optional[bool] = None  
 
 class User(UserBase):
     id: int

@@ -2,8 +2,9 @@ from fastapi import HTTPException
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 import model, schemas
+from datetime import timedelta
 import re
-from utils import get_password_hash, verify_password,create_full_name
+from utils import get_password_hash, verify_password,create_full_name,ACCESS_TOKEN_EXPIRE_MINUTES,create_access_token,decode_access_token
 
 #def create_user(db: Session, user: schemas.UserCreate):
  #   hashed_password = get_password_hash(user.password)
@@ -94,9 +95,13 @@ def authenticate_user(db: Session, user: schemas.UserLogin):
     # Verify the password
     if not verify_password(user.password, db_user.hashed_password):
         return {"status": "error", "message": "Invalid password"}
+    
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    #return {"access_token": access_token, "token_type": "bearer"}
 
     # If username and password are valid, return the user details
-    return {"status": "success", "message": "User authenticated", "user": db_user}
+    return {"status": "success", "message": "User authenticated", "user": db_user, "access_token": access_token, "token_type": "bearer"}
 
 
 # Retrieve user by ID
@@ -104,14 +109,37 @@ def get_user(db: Session, user_id: int):
     user = db.query(model.User).filter(model.User.id == user_id).first()
 
     if user is None:
-        raise HTTPException(status_code=400, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     return user
 
 # Retrieve all users
-def get_users(db: Session):
-    user = db.query(model.User).all()
+def get_users(db: Session,token: str):
+    username_exists = decode_access_token(token)
+    if username_exists is not None:
+        user = db.query(model.User).all()
     
-    if user is None:
-        raise HTTPException(status_code=400, detail="No Users available")
+        if user is None:
+            raise HTTPException(status_code=404, detail="No Users available")
     return user
 
+def update_user(user_id: int, user_update: schemas.UserUpdate, db: Session):
+    user = db.query(model.User).filter(model.User.id == user_id).first()
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    # Validate email format
+    if not validate_email(user_update.email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
+
+    if not validate_contact_no(user_update.contact_no):
+        raise HTTPException(status_code=400, detail="contact_no must be equal to 10 digits")
+
+    for key, value in user_update.dict(exclude_unset=True).items():
+        setattr(user, key, value)
+
+
+
+    db.commit()
+    db.refresh(user)
+
+    return user

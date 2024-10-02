@@ -31,3 +31,14 @@ Request Payload:
 }
 
 
+account_service
+
+1. POST-/accounts/
+
+Request Payload:
+{
+    "account_type" :"savings",
+    "balance" : 40000,
+    "customer_id":2
+}
+

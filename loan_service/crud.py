@@ -60,8 +60,8 @@ def get_loan_by_customer_Id(db: Session, customer_id: int):
     return loan
 
 # Update a loan
-def update_loan(db: Session, customer_id: int, loan_type: str ,loan_data: schemas.LoanUpdate):
-    loan = db.query(models.Loan).filter(models.Loan.customer_id == customer_id, models.Loan.loan_type == loan_type).first()
+def update_loan(db: Session, customer_id: int, loan_no: str,loan_data: schemas.LoanUpdate):
+    loan = db.query(models.Loan).filter(models.Loan.customer_id == customer_id, models.Loan.loan_no == loan_no).first()
 
     if loan is None:
         raise HTTPException(status_code=404, detail="Loan not found for this customer and loan type")
