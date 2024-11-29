@@ -14,7 +14,7 @@ def create_account(db: Session, account: schemas.AccountCreate):
         account_number=account_number,
         account_type=account.account_type,
         balance=account.balance,
-        owner_id=account.owner_id
+        customer_id =account.customer_id
     )
     db.add(db_account)
     db.commit()
@@ -22,8 +22,8 @@ def create_account(db: Session, account: schemas.AccountCreate):
     return db_account
 
 # Update an account
-def update_account(db: Session, account_id: int, account_data: schemas.AccountUpdate):
-    account = db.query(models.Account).filter(models.Account.id == account_id).first()
+def update_account(db: Session, customer_id: int, account_data: schemas.AccountUpdate):
+    account = db.query(models.Account).filter(models.Account.customer_id== customer_id).first()
     if not account:
         raise HTTPException(status_code=404, detail="Account not found")
 
@@ -37,8 +37,8 @@ def update_account(db: Session, account_id: int, account_data: schemas.AccountUp
     return account
 
 # Retrieve account by ID
-def get_account(db: Session, account_id: int):
-    account = db.query(models.Account).filter(models.Account.id == account_id).first()
+def get_account(db: Session, customer_id: int):
+    account = db.query(models.Account).filter(models.Account.customer_id == customer_id).first()
     if not account:
         raise HTTPException(status_code=404, detail="Account not found")
     return account

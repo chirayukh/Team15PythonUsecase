@@ -11,6 +11,11 @@ class LoanBase(BaseModel):
 class LoanCreate(LoanBase):
     pass
 
+class LoanUpdate(BaseModel):
+    amount: int
+    duration_months: int
+    #applied_on: datetime
+
 class Loan(LoanBase):
     id: int
     applied_on: datetime

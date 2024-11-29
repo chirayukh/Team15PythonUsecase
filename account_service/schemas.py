@@ -4,7 +4,7 @@ from typing import Optional
 class AccountBase(BaseModel):
     account_type: str
     balance: Optional[float] = 0.0
-    owner_id: int  # Reference to the user who owns the account
+    customer_id: int  # Reference to the user who owns the account
 
 class AccountCreate(AccountBase):
     pass
